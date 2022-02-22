@@ -1,0 +1,8 @@
+.descriptionBlock {
+    padding: 10px;
+}
+
+.profileImg {
+    max-width: 960px;
+    max-height: fit-content;
+}
