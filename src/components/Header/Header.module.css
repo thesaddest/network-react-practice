@@ -7,3 +7,9 @@
   max-width: 50px;
   max-height: 50px;
 }
+.loginBlock {
+  float: right;
+}
+.loginBlock a{
+  color: white;
+}
