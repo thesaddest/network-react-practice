@@ -8,7 +8,6 @@ const Header = (props) =>{
         <img src='https://i.imgur.com/lhXs7Hg.png'></img>
         <div className={s.loginBlock}>
             {props.isAuth ? props.login : <NavLink to={'/login'}>Login</NavLink>}
-
         </div>
       </header>
   );
