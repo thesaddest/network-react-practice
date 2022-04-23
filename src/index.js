@@ -8,6 +8,7 @@ import {HashRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 
 ReactDOM.render(
+    //Using HashRouter to render on github, you have to use BorwserRouter instead
     <HashRouter>
         <Provider store={store}>
             <App />
