@@ -19,10 +19,10 @@
   "runtime~main.js.map": "/network-react-practice/static/js/runtime~main.19ecdd1e.js.map",
   "static/media/preLoader.svg": "/network-react-practice/static/media/preLoader.66658ebc.svg",
   "static/media/user.png": "/network-react-practice/static/media/user.ded1dfef.png",
+  "static/css/main.42b9f9a3.chunk.css.map": "/network-react-practice/static/css/main.42b9f9a3.chunk.css.map",
+  "static/css/3.b132bbc1.chunk.css.map": "/network-react-practice/static/css/3.b132bbc1.chunk.css.map",
   "static/css/4.81d60fb4.chunk.css.map": "/network-react-practice/static/css/4.81d60fb4.chunk.css.map",
   "static/css/2.f5584e87.chunk.css.map": "/network-react-practice/static/css/2.f5584e87.chunk.css.map",
-  "static/css/3.b132bbc1.chunk.css.map": "/network-react-practice/static/css/3.b132bbc1.chunk.css.map",
-  "static/css/main.42b9f9a3.chunk.css.map": "/network-react-practice/static/css/main.42b9f9a3.chunk.css.map",
   "index.html": "/network-react-practice/index.html",
   "precache-manifest.f7091deacdd6f98c141888674c1e2bb3.js": "/network-react-practice/precache-manifest.f7091deacdd6f98c141888674c1e2bb3.js",
   "service-worker.js": "/network-react-practice/service-worker.js"
