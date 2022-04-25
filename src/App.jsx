@@ -2,7 +2,7 @@ import React, {Suspense} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import News from "./components/News/News";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Navigate} from "react-router-dom";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -17,8 +17,16 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
+    catchAllUnhandledErrors = (promiseRejectionEvent) =>{
+        console.log(promiseRejectionEvent);
+    }
     componentDidMount() {
         this.props.initializeApp();
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -32,6 +40,8 @@ class App extends React.Component {
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Routes>
+                        <Route path='/'
+                               element={<Navigate to='/profile'/>}/>
                         <Route path='/dialogs'
                                element={
                                    <Suspense fallback={<Preloader/>}>
