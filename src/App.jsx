@@ -71,7 +71,7 @@ class App extends React.Component {
                         <Route path="/users"
                                element={
                                    <Suspense fallback={<Preloader/>}>
-                                       <UsersContainer/>
+                                       <UsersContainer pageTitle={"The saddest users"}/>
                                    </Suspense>
                                }/>
                     </Routes>
