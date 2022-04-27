@@ -41,7 +41,8 @@ type setAuthUserDataActionType = {
     type: typeof SET_USER_DATA,
     payload: setAuthUserDataActionPayloadType
 }
-export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): setAuthUserDataActionType => ({
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean):
+    setAuthUserDataActionType => ({
     type: SET_USER_DATA, payload: {userId, email, login, isAuth}
 });
 
