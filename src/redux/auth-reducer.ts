@@ -1,5 +1,7 @@
-import {authAPI, ResultCodesEnum, ResultCodeWithCaptcha, securytiAPI} from "../api/api";
+import {ResultCodesEnum, ResultCodeForCaptchaEnum} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {authAPI} from "../api/auth-api";
+import {securytiAPI} from "../api/security-api";
 
 const SET_USER_DATA = 'thesaddest-network/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'thesaddest-network/auth/GET_CAPTCHA_URL_SUCCESS';
@@ -69,7 +71,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     if (loginData.resultCode === ResultCodesEnum.Success) {
         dispatch(getAuthUserData());
     } else {
-        if(loginData.resultCode === ResultCodeWithCaptcha.CaptchaIsRequired){
+        if(loginData.resultCode === ResultCodeForCaptchaEnum.CaptchaIsRequired){
             dispatch(getCaptchaUrl());
         }
         let message = loginData.messages.length > 0 ? loginData.messages[0] : "Some error";
@@ -78,8 +80,8 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 }
 
 export const getCaptchaUrl = () => async (dispatch: any) => {
-    const response = await securytiAPI.getCaptchaUrl();
-    const captchaUrl = response.data.url;
+    const data = await securytiAPI.getCaptchaUrl();
+    const captchaUrl = data.url;
     dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
 
