@@ -1,8 +1,7 @@
 import {updateObjectInArray} from "../utils/object-helpers";
 import {UserType} from "../types/types";
-import {AppStateType, InferActionsTypes} from "./redux-store";
+import {AppStateType, BaseThunkType, InferActionsTypes} from "./redux-store";
 import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
 import {usersAPI as UsersAPI, usersAPI} from "../api/users-api";
 
 let initialState = {
@@ -14,33 +13,31 @@ let initialState = {
     followingInProgress: [] as Array<number> //array of users ids
 }
 
-type InitialState = typeof initialState
-
 const usersReducer = (state = initialState, action: ActionsTypes): InitialState => {
     switch (action.type) {
-        case "FOLLOW":
+        case "thesaddest-network/users/FOLLOW":
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, "id", {followed: true})
             }
-        case "UNFOLLOW":
+        case "thesaddest-network/users/UNFOLLOW":
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, "id", {followed: false})
             }
-        case "SET_USERS": {
+        case "thesaddest-network/users/SET_USERS": {
             return {...state, users: action.users}
         }
-        case "SET_CURRENT_PAGE": {
+        case "thesaddest-network/users/SET_CURRENT_PAGE": {
             return {...state, currentPage: action.currentPage}
         }
-        case "SET_TOTAL_USERS_COUNT": {
+        case "thesaddest-network/users/SET_TOTAL_USERS_COUNT": {
             return {...state, totalUsersCount: action.count}
         }
-        case "TOGGLE_IS_FETCHING": {
+        case "thesaddest-network/users/TOGGLE_IS_FETCHING": {
             return {...state, isFetching: action.isFetching}
         }
-        case "TOGGLE_IS_FOLLOWING_PROGRESS": {
+        case "thesaddest-network/users/TOGGLE_IS_FOLLOWING_PROGRESS": {
             return {
                 ...state,
                 followingInProgress: action.isFetching
@@ -53,36 +50,31 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialState 
     }
 }
 
-type ActionsTypes = InferActionsTypes<typeof actions>
 
 export const actions = {
-    followSuccess: (userId: number) => ({type: 'FOLLOW', userId} as const),
-    unfollowSuccess: (userId: number) => ({type: 'UNFOLLOW', userId} as const),
-    setUsers: (users: Array<UserType>) => ({type: 'SET_USERS', users} as const),
-    setCurrentPage: (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage} as const),
+    followSuccess: (userId: number) => ({type: 'thesaddest-network/users/FOLLOW', userId} as const),
+    unfollowSuccess: (userId: number) => ({type: 'thesaddest-network/users/UNFOLLOW', userId} as const),
+    setUsers: (users: Array<UserType>) => ({type: 'thesaddest-network/users/SET_USERS', users} as const),
+    setCurrentPage: (currentPage: number) => ({type: 'thesaddest-network/users/SET_CURRENT_PAGE', currentPage} as const),
     setTotalUsersCount: (totalUsersCount: number) => ({
-        type: 'SET_TOTAL_USERS_COUNT',
+        type: 'thesaddest-network/users/SET_TOTAL_USERS_COUNT',
         count: totalUsersCount
     } as const),
     toggleIsFetching: (isFetching: boolean) => ({
-        type: 'TOGGLE_IS_FETCHING',
+        type: 'thesaddest-network/users/TOGGLE_IS_FETCHING',
         isFetching
     } as const),
     toggleFollowingProgress: (isFetching: boolean, userId: number) => ({
-        type: 'TOGGLE_IS_FOLLOWING_PROGRESS',
+        type: 'thesaddest-network/users/TOGGLE_IS_FOLLOWING_PROGRESS',
         isFetching,
         userId
     } as const)
 }
 
 
-type GetStateType = () => AppStateType
-type DispatchType = Dispatch<ActionsTypes>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
-
 export const requestUsers = (page: number, pageSize: number): ThunkType => {
 
-    return async (dispatch: DispatchType, getState: GetStateType) => {
+    return async (dispatch, getState) => {
         dispatch(actions.toggleIsFetching(true));
         dispatch(actions.setCurrentPage(page));
 
@@ -93,7 +85,7 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => {
     }
 }
 
-const _followUnfollowFlow = async (dispatch: DispatchType,
+const _followUnfollowFlow = async (dispatch: Dispatch<ActionsTypes>,
                                    userId: number,
                                    apiMethod: any,
                                    actionCreator: (userId: number) => ActionsTypes) => {
@@ -120,3 +112,7 @@ export const unfollow = (userId: number): ThunkType => {
 }
 
 export default usersReducer;
+
+type InitialState = typeof initialState
+type ThunkType = BaseThunkType<ActionsTypes>
+type ActionsTypes = InferActionsTypes<typeof actions>
